@@ -17,7 +17,16 @@ module ALU(
 	output reg [`DATA_WIDTH - 1:0] Result
 );
 
-	// TODO: insert your code
+	parameter [3:0] 
+		AND          = 4'b0000,
+		OR           = 4'b0001,
+		ADD          = 4'b0010,
+		SUB          = 4'b0110,
+		SIGNED_SLT   = 4'b0111,
+		UNSIGNED_SLT = 4'b0100,
+		LF_16        = 4'b0011;
+
+
 	reg Overflow, CarryOut, Zero;
     reg [`DATA_WIDTH - 1:0] C, d, t, BF, z;
     reg [7:0] D, T; 
@@ -25,7 +34,7 @@ module ALU(
     always @(*)
     begin
     case(ALUop)
-    4'b0000 :    begin
+    AND     :   begin
                 Overflow = 0;
                 CarryOut = 0;
                 Zero = 0;
@@ -38,7 +47,7 @@ module ALU(
                 D = 8'd0;
                 T = 8'd0;
                 end
-    4'b0001 :    begin
+    OR      :   begin
                 Overflow = 0;
                 CarryOut = 0;
                 Zero = 0;
@@ -52,7 +61,7 @@ module ALU(
                 D = 8'd0;
                 T = 8'd0;
                 end
-    4'b0010 :    begin
+    ADD     :   begin
                 d = A & B;
                 t = A ^ B;
             
@@ -144,7 +153,7 @@ module ALU(
                 temp = 32'd0;
                 end    
                 
-    4'b0110 :    begin
+    SUB     :   begin
 
                 BF = ~B + 32'h0000_0001;
                 d = A & BF;
@@ -237,7 +246,7 @@ module ALU(
                 
                 
                 
-    4'b0111 :   begin                                              //signed
+    SIGNED_SLT :begin                                              //signed
                 CarryOut = 0;
                 Zero = 0;
                 Overflow = 0;
@@ -262,7 +271,7 @@ module ALU(
                 T = 8'd0;                
                 end
     
-    4'b0011 :   begin
+    LF_16   :   begin
                 Overflow = 0;
                 CarryOut = 0;
                 Zero = 0;
@@ -276,7 +285,7 @@ module ALU(
                 D = 8'd0;
                 T = 8'd0;
                 end        
-    4'b0100 :   begin
+    UNSIGNED_SLT :  begin
                 Overflow = 0;
                 CarryOut = 0;
                 Zero = 0;
