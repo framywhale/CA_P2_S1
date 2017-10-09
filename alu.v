@@ -275,12 +275,28 @@ module ALU(
                 temp = 32'd0;
                 D = 8'd0;
                 T = 8'd0;
-                end        
+                end    
+
     4'b0100 :   begin
                 Overflow = 0;
                 CarryOut = 0;
                 Zero = 0;
                 Result = A < B ? 32'd1 : 32'd0;
+                C = 32'd0;
+                d = 32'd0;
+                t = 32'd0;
+                z = 32'd0;
+                BF = 32'd0;
+                temp = 32'd0;
+                D = 8'd0;
+                T = 8'd0;
+                end
+
+    4'b0101:    begin // sll
+                Result = B << (A[4:0]);
+                Overflow = 0;
+                CarryOut = 0;
+                Zero = 0;               
                 C = 32'd0;
                 d = 32'd0;
                 t = 32'd0;
